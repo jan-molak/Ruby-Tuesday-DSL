@@ -40,15 +40,12 @@ class Order
   end
 
   def print_receipt
-    total = 0
-    @basket.each do |product, quantity|
-      price = quantity * PRODUCTS[product]
-      total += price
-      puts "#{"#{product} (#{quantity}x)".ljust(20, " ")} - #{"#{price}".rjust(6, " ")}"
+    @products.each do |product, quantity|
+      puts "#{"#{product} (#{quantity}x)".ljust(20, " ")} - #{"#{total_price product}".rjust(6, " ")}"
     end
 
     puts "".ljust(29, "-")
-    puts "#{"Total:".ljust(20, " ")} #{"#{total}".rjust(8, " ")}"
+    puts "#{"Total:".ljust(20, " ")} #{"#{total_price}".rjust(8, " ")}"
   end
 
 end

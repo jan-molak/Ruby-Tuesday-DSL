@@ -55,6 +55,14 @@ describe Order do
     order.total_price(:pants).should == 0
   end
 
+  it "should print a receipt" do
+    order = Order.new do
+      add :pants
+      add :pants, 3
+      add :jacket
+    end
 
+    order.print_receipt # add a regex matcher
+  end
 
 end
