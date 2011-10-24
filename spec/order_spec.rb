@@ -50,4 +50,11 @@ describe Order do
     order.total_price(:pants).should == 4 * 3 # get from the PRICE_LIST
   end
 
+  it "should return a total price of 0 for a product that's not on the order" do
+    order = Order.new
+    order.total_price(:pants).should == 0
+  end
+
+
+
 end

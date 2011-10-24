@@ -18,12 +18,6 @@ class Order
     self[product] = quantity
   end
 
-  def total_price product
-    if product.nil?
-
-    end
-  end
-
   def []= product, quantity
     if PRICE_LIST.keys.include?(product)
       @products[product] = (@products.keys.include?(product) && (@products[product] + quantity)) || quantity
@@ -31,6 +25,30 @@ class Order
   end
 
   def [] product
-    @products[product]
+    @products[product] unless @products[product].nil?
   end
+
+  def total_price product=nil
+    total = 0
+    if product.nil?
+      @products.each { |product, quantity| total += quantity * PRICE_LIST[product] }
+    else
+      total = self[product] * PRICE_LIST[product] unless self[product].nil?
+    end
+
+    total
+  end
+
+  def print_receipt
+    total = 0
+    @basket.each do |product, quantity|
+      price = quantity * PRODUCTS[product]
+      total += price
+      puts "#{"#{product} (#{quantity}x)".ljust(20, " ")} - #{"#{price}".rjust(6, " ")}"
+    end
+
+    puts "".ljust(29, "-")
+    puts "#{"Total:".ljust(20, " ")} #{"#{total}".rjust(8, " ")}"
+  end
+
 end
