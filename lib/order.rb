@@ -51,11 +51,11 @@ module Shop
     def print_receipt
       output = '';
       @products.each do |product, quantity|
-        output += "#{"#{product} (#{quantity}x)".ljust(20, " ")} - #{"#{total_price product}".rjust(6, " ")}\n"
+        output << "#{"#{product} (#{quantity}x)".ljust(20, " ")} - #{"#{total_price product}".rjust(6, " ")}\n"
       end
 
-      output += "".ljust(29, "-") + "\n"
-      output += "#{"Total:".ljust(20, " ")} #{"#{total_price}".rjust(8, " ")}\n"
+      output << "".ljust(29, "-") + "\n"
+      output << "#{"Total:".ljust(20, " ")} #{"#{total_price}".rjust(8, " ")}\n"
 
       @reporter.message output
     end
