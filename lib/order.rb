@@ -1,4 +1,10 @@
 module Shop
+  class Reporter
+    def message string
+      puts string
+    end
+  end
+
   PRICE_LIST = {
     :shirt     => 5.60,
     :pants     => 3,
@@ -11,7 +17,8 @@ module Shop
 
   class Order
 
-    def initialize &block
+    def initialize reporter, &block
+      @reporter = reporter
       @products = {}
       instance_eval(&block) if block_given?
     end
@@ -42,12 +49,15 @@ module Shop
     end
 
     def print_receipt
+      output = '';
       @products.each do |product, quantity|
-        puts "#{"#{product} (#{quantity}x)".ljust(20, " ")} - #{"#{total_price product}".rjust(6, " ")}"
+        output += "#{"#{product} (#{quantity}x)".ljust(20, " ")} - #{"#{total_price product}".rjust(6, " ")}\n"
       end
 
-      puts "".ljust(29, "-")
-      puts "#{"Total:".ljust(20, " ")} #{"#{total_price}".rjust(8, " ")}"
+      output += "".ljust(29, "-") + "\n"
+      output += "#{"Total:".ljust(20, " ")} #{"#{total_price}".rjust(8, " ")}\n"
+
+      @reporter.message output
     end
 
   end
